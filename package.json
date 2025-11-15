@@ -1,39 +1,30 @@
 {
-  "name": "card-collect-api",
+  "name": "final-project-template",
   "version": "1.0.0",
-  "description": "card collecting api",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "node --env-file=.env --watch src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/msherin-clt/card-collect-api.git"
-  },
-  "author": "",
+  "description": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/msherin-clt/card-collect-api/issues"
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --env-file=.env --watch src/server.js"
   },
-  "homepage": "https://github.com/msherin-clt/card-collect-api#readme",
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@redocly/cli": "^2.11.1",
-    "eslint": "^9.39.1",
-    "eslint-config-prettier": "^10.1.8",
-    "globals": "^16.5.0",
-    "prettier": "^3.6.2",
-    "prisma": "^6.19.0"
+    "@eslint/js": "^9.29.0",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.2.0",
+    "prettier": "^3.6.1",
+    "prisma": "^6.12.0",
+    "supertest": "^7.1.4"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
+    "morgan": "^1.10.0",
+    "@prisma/client": "^6.12.0",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "express-validator": "^7.3.0",
-    "morgan": "^1.10.1",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2"
   }
 }
