@@ -6,6 +6,7 @@ import seriesRoutes from './routes/seriesRoutes.js';
 import cardRoutes from './routes/cardRoutes.js';
 import setRoutes from './routes/setRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import deckRoutes from './routes/deckRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ app.use('/api/series', seriesRoutes);
 app.use('/api/cards', cardRoutes);
 app.use('/api/sets', setRoutes);
 app.use('/api', userRoutes);
+app.use('/api/users/me/decks', deckRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
