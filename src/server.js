@@ -4,6 +4,7 @@ import morgan from 'morgan';
 
 import seriesRoutes from './routes/seriesRoutes.js';
 import cardRoutes from './routes/cardRoutes.js';
+import setRoutes from './routes/setRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/series', seriesRoutes);
 app.use('/api/cards', cardRoutes);
+app.use('/api/sets', setRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

@@ -1,5 +1,3 @@
-// src/routes/seriesRoutes.js
-
 import { Router } from 'express';
 import seriesController from '../controllers/seriesController.js';
 import { protect, isAdmin } from '../middleware/authMiddleware.js';
