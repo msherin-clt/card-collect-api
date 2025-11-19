@@ -1,15 +1,98 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  username String  @unique
+  password String
+  role     String  @default("USER")
+
+  decks      Deck[]
+  collection UserCardCollection[]
+  wishlist   UserCardWishlist[]
+}
+
+model Series {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  publisher String?
+
+  sets Set[]
+}
+
+model Set {
+  id       Int     @id @default(autoincrement())
+  name     String
+  
+  series   Series @relation(fields: [seriesId], references: [id])
+  seriesId Int
+
+  cards Card[]
+}
+
+model Card {
+  id        Int     @id @default(autoincrement())
+  name      String
+  number    String?
+  variation String?
+  image_url String?
+
+  set   Set  @relation(fields: [setId], references: [id])
+  setId Int
+
+  inCollections UserCardCollection[]
+  inWishlists   UserCardWishlist[]
+  inDecks       DeckCard[]
+}
+
+model Deck {
+  id          Int     @id @default(autoincrement())
+  name        String
+  format      String?
+  description String?
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  cards DeckCard[]
+}
+
+model UserCardCollection {
+  id        Int     @id @default(autoincrement())
+  condition String?
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  card   Card @relation(fields: [cardId], references: [id])
+  cardId Int
+}
+
+model UserCardWishlist {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  card   Card @relation(fields: [cardId], references: [id])
+  cardId Int
+
+  @@id([userId, cardId])
+}
+
+model DeckCard {
+  quantity Int @default(1)
+
+  deck   Deck @relation(fields: [deckId], references: [id])
+  deckId Int
+
+  card   Card @relation(fields: [cardId], references: [id])
+  cardId Int
+
+  @@id([deckId, cardId])
 }
