@@ -13,3 +13,64 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// User (UniqueID, name, email, hashed_password, role)
+model User {
+  id             Int    @id @default(autoincrement()) @map("UniqueID")
+  name           String
+  email          String @unique
+  hashedPassword String @map("hashed_password")
+  role           Role   @default(USER)
+
+  cards          Card[]
+
+  @@map("User")
+}
+
+// Series (UniqueID, name, manufacturerer)
+model Series {
+  id           Int    @id @default(autoincrement()) @map("UniqueID")
+  name         String
+  manufacturer String @map("manufacturerer")
+
+  sets         Set[]
+
+  @@map("Series")
+}
+
+// Set (UniqueID, series_id, name)
+model Set {
+  id       Int    @id @default(autoincrement()) @map("UniqueID")
+  name     String
+
+  seriesId Int    @map("series_id")
+  series   Series @relation(fields: [seriesId], references: [id])
+
+  // relations
+  cards    Card[]
+
+  @@map("Set")
+}
+
+// Card (UniqueID, user_id, set_id, name, image, number, variation)
+model Card {
+  id        Int    @id @default(autoincrement()) @map("UniqueID")
+
+  userId    Int    @map("user_id")
+  setId     Int    @map("set_id")
+
+  name      String
+  image     String?
+  number    Int?
+  variation String?
+
+  owner User @relation(fields: [userId], references: [id])
+  set   Set  @relation(fields: [setId], references: [id])
+
+  @@map("Card")
+}
