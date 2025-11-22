@@ -1,0 +1,64 @@
+get:
+  summary: Get a specific card
+  tags:
+    - Cards
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Card details
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Card.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+put:
+  summary: Update a card (Admin only)
+  tags:
+    - Cards
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            variation:
+              type: string
+  responses:
+    '200':
+      description: Card updated
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Card.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml
+delete:
+  summary: Delete a card (Admin only)
+  tags:
+    - Cards
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml

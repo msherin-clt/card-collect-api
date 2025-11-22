@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+// Updated for docs
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 import seriesRoutes from './routes/seriesRoutes.js';
 import cardRoutes from './routes/cardRoutes.js';
@@ -14,11 +17,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
+// Updated from docs
+const specs = YAML.load('./public/bundled.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use('/api/series', seriesRoutes);
 app.use('/api/cards', cardRoutes);
 app.use('/api/sets', setRoutes);
-app.use('/api', userRoutes);
+app.use('/', userRoutes);
 app.use('/api/users/me/decks', deckRoutes);
 
 app.use((req, res, next) => {

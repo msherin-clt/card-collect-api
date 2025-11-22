@@ -1,0 +1,35 @@
+get:
+  summary: Get current user info
+  tags:
+    - Users
+  responses:
+    '200':
+      description: Current user data
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/User.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+put:
+  summary: Update current user info
+  tags:
+    - Users
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+  responses:
+    '200':
+      description: Updated user info
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/User.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml

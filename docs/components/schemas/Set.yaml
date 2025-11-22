@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: Base Set
+  series_id:
+    type: integer
+    example: 1
+  set_cards:
+    type: integer
+    example: 102
