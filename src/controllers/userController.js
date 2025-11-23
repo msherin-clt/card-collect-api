@@ -1,15 +1,26 @@
+// src/controllers/userController.js
+import { signUp, login } from '../service/userService.js';
+import {
+  findUserById,
+  updateUserProfile,
+  getUserCollection,
+  addUserCollectionItem,
+} from '../repositories/userRepo.js';
+import * as collectionService from '../service/collectionService.js';
+
 // --- POST /auth/register ---
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    // TODO: Hash password
-    // TODO: Create user in DB
-    // TODO: Generate JWT token
+    // TODO comments are effectively handled inside signUp()
 
-    //Placeholder below
-    res.status(201).json({ "id": 1, "username": username, "email": email });
+    const result = await signUp(username, email, password);
+
+    res.status(201).json(result);
   } catch (error) {
-    res.status(500).json({ message: 'Error registering user' });
+    console.error(error);
+    const status = error.status || 500;
+    res.status(status).json({ message: error.message || 'Error registering user' });
   }
 };
 
@@ -17,73 +28,104 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    // TODO: Find user by email
-    // TODO: Compare hashed password
-    // TODO: Generate JWT token
 
-    //Placeholder below
-    res.json({ "token": "eyJhbGciOiJIUzI1NiIsInR5..." });
+    const result = await login(email, password);
+
+    res.json(result);
   } catch (error) {
-    res.status(401).json({ message: 'Invalid credentials' });
+    console.error(error);
+    const status = error.status || 401;
+    res.status(status).json({ message: error.message || 'Invalid credentials' });
   }
 };
 
 // --- GET /users/me ---
 const getUserProfile = async (req, res) => {
   try {
+    const userId = req.user.id;
+    const user = await findUserById(userId);
 
-    //Placeholder below
-    res.json({ "id": 1, "username": "collector1", "email": "user@email.com" });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Error fetching profile' });
   }
 };
 
 // --- PUT /users/me ---
-const updateUserProfile = async (req, res) => {
+const updateUserProfileController = async (req, res) => {
   try {
-    const { username } = req.body;
+    const userId = req.user.id;
 
-    //Placeholder below
-    res.json({ "id": 1, "username": "top_collector", "email": "user@email.com" });
+    if (req.body.password || req.body.email) {
+      return res.status(400).json({ message: 'Cannot update email or password here' });
+    }
+
+    const { username } = {};
+
+    if (req.body.username){
+      username: req.body.username
+    }
+    else {
+      return res.status(400).json({ message: 'No valid fields to update' });
+    }
+
+
+
+    const updated = await updateUserProfile(userId, { username });
+
+    res.json(updated);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Error updating profile' });
   }
 };
 
 // --- GET /users/me/collection ---
-const getUserCollection = async (req, res) => {
+const getUserCollectionController = async (req, res) => {
   try {
+    const userId = req.user.id; // set by protect middleware
 
-    //Placeholder below
-    const collection = [
-      {"card_id": 10, "name": "Charizard", "set": "Base Set", "condition": "Near Mint"}
-    ];
+    const collection = await collectionService.getUserCollection(userId);
+
     res.json(collection);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching collection' });
+    console.error(error);
+    const status = error.status || 500;
+    res.status(status).json({ message: error.message || 'Error fetching collection' });
   }
 };
 
 // --- POST /users/me/collection ---
-const addUserCollectionItem = async (req, res) => {
+const addUserCollectionItemController = async (req, res) => {
   try {
-    const { card_id, condition } = req.body;
+    const userId = req.user.id;
+    // Expect body like: { "cardId": 5, "condition": "Near Mint" }
+    const { cardId, condition } = req.body;
 
-    //Placeholder below
-    const newItem = { "id": 123, "user_id": 1, "card_id": card_id, "condition": condition };
+    const newItem = await collectionService.addUserCollectionItem(
+      userId,
+      cardId,
+      condition
+    );
+
     res.status(201).json(newItem);
   } catch (error) {
-    res.status(500).json({ message: 'Error adding to collection' });
+    console.error(error);
+    const status = error.status || 500;
+    res.status(status).json({ message: error.message || 'Error adding to collection' });
   }
 };
-
 
 export default {
   registerUser,
   loginUser,
   getUserProfile,
-  updateUserProfile,
-  getUserCollection,
-  addUserCollectionItem
+  updateUserProfile: updateUserProfileController,
+  getUserCollection: getUserCollectionController,
+  addUserCollectionItem: addUserCollectionItemController,
 };
