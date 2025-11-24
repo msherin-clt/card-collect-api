@@ -137,7 +137,7 @@ paths:
             schema:
               type: object
               properties:
-                card_id:
+                cardId:
                   type: integer
                 condition:
                   type: string
@@ -668,7 +668,7 @@ components:
           items:
             type: object
             properties:
-              card_id:
+              cardId:
                 type: integer
                 example: 10
               name:
