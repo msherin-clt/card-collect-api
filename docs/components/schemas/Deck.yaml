@@ -1,0 +1,28 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: My Fire Deck
+  format:
+    type: string
+    example: Standard
+  description:
+    type: string
+    example: My first deck
+  cards:
+    type: array
+    items:
+      type: object
+      properties:
+        card_id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: Charizard
+        quantity:
+          type: integer
+          example: 1

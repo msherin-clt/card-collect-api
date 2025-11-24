@@ -1,0 +1,66 @@
+get:
+  summary: Get a specific deck
+  tags:
+    - Decks
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Deck details
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Deck.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+put:
+  summary: Update a deck
+  tags:
+    - Decks
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            format:
+              type: string
+            description:
+              type: string
+  responses:
+    '200':
+      description: Deck updated
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Deck.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+delete:
+  summary: Delete a deck
+  tags:
+    - Decks
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml

@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  title: Card Collecting App API
+  version: 1.0.0
+  description: API for managing users, collections, series, sets, cards, and decks.
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+security:
+  - bearerAuth: []
+tags:
+  - name: Users
+    description: Endpoints for user management and authentication
+  - name: Series
+    description: Endpoints for trading card series (admin only for some operations)
+  - name: Sets
+    description: Endpoints for card sets (admin only for some operations)
+  - name: Cards
+    description: Endpoints for individual cards (admin only for some operations)
+  - name: Decks
+    description: Endpoints for user decks
+paths:
+  /auth/register:
+    $ref: paths/auth_register.yaml
+  /auth/login:
+    $ref: paths/auth_login.yaml
+  /users/me:
+    $ref: paths/users_me.yaml
+  /users/me/collection:
+    $ref: paths/users_me_collection.yaml
+  /series:
+    $ref: paths/series.yaml
+  /series/{id}:
+    $ref: paths/series_{id}.yaml
+  /sets:
+    $ref: paths/sets.yaml
+  /sets/{id}:
+    $ref: paths/sets_{id}.yaml
+  /cards:
+    $ref: paths/cards.yaml
+  /cards/{id}:
+    $ref: paths/cards_{id}.yaml
+  /users/me/decks:
+    $ref: paths/users_me_decks.yaml
+  /users/me/decks/{id}:
+    $ref: paths/users_me_decks_{id}.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

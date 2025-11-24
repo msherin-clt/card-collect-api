@@ -1,0 +1,37 @@
+get:
+  summary: List all series
+  tags:
+    - Series
+  responses:
+    '200':
+      description: Series list
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Series.yaml
+post:
+  summary: Create a new series (Admin only)
+  tags:
+    - Series
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            publisher:
+              type: string
+  responses:
+    '201':
+      description: Series created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Series.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml

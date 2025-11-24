@@ -1,0 +1,62 @@
+get:
+  summary: Get a specific set
+  tags:
+    - Sets
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Set details
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Set.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+put:
+  summary: Update a set (Admin only)
+  tags:
+    - Sets
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+  responses:
+    '200':
+      description: Set updated
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Set.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml
+delete:
+  summary: Delete a set (Admin only)
+  tags:
+    - Sets
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml

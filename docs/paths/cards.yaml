@@ -1,0 +1,41 @@
+get:
+  summary: List all cards
+  tags:
+    - Cards
+  responses:
+    '200':
+      description: List of cards
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Card.yaml
+post:
+  summary: Create a new card (Admin only)
+  tags:
+    - Cards
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            set_id:
+              type: integer
+            variation:
+              type: string
+            number:
+              type: string
+  responses:
+    '201':
+      description: Card created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Card.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml

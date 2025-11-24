@@ -1,0 +1,39 @@
+get:
+  summary: List all sets
+  tags:
+    - Sets
+  responses:
+    '200':
+      description: List of sets
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Set.yaml
+post:
+  summary: Create a new set (Admin only)
+  tags:
+    - Sets
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            series_id:
+              type: integer
+            set_cards:
+              type: integer
+  responses:
+    '201':
+      description: Set created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Set.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml
