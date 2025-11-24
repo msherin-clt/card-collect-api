@@ -1,0 +1,39 @@
+get:
+  summary: Get current user's collection
+  tags:
+    - Users
+  responses:
+    '200':
+      description: User collection
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Card.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+post:
+  summary: Add a card to current user's collection
+  tags:
+    - Users
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            card_id:
+              type: integer
+            condition:
+              type: string
+  responses:
+    '201':
+      description: Card added to collection
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Card.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml

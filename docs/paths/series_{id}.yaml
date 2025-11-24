@@ -1,0 +1,64 @@
+get:
+  summary: Get a specific series
+  tags:
+    - Series
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      description: Series details
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Series.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml
+put:
+  summary: Update a series (Admin only)
+  tags:
+    - Series
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            publisher:
+              type: string
+  responses:
+    '200':
+      description: Series updated
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Series.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml
+delete:
+  summary: Delete a series (Admin only)
+  tags:
+    - Series
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '204':
+      $ref: ../components/responses/NoContent.yaml
+    '403':
+      $ref: ../components/responses/NotAuthorized.yaml

@@ -1,0 +1,25 @@
+post:
+  summary: User login
+  tags:
+    - Users
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+  responses:
+    '200':
+      description: Auth token returned
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AuthToken.yaml
+    '401':
+      $ref: ../components/responses/NotAuthorized.yaml

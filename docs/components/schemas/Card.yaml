@@ -1,0 +1,23 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 10
+  name:
+    type: string
+    example: Charizard
+  set_id:
+    type: integer
+    example: 1
+  variation:
+    type: string
+    example: Holographic
+  number:
+    type: string
+    example: 4/102
+  image_url:
+    type: string
+    example: https://example.com/charizard.png
+  condition:
+    type: string
+    example: Near Mint
