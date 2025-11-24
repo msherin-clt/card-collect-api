@@ -4,8 +4,10 @@ info:
   version: 1.0.0
   description: API for managing users, collections, series, sets, cards, and decks.
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api
     description: Local development server
+  - url: https://card-collect-api.onrender.com/api
+    description: Production server
 security:
   - bearerAuth: []
 tags:
