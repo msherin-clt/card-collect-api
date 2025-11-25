@@ -24,7 +24,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api/series', seriesRoutes);
 app.use('/api/cards', cardRoutes);
 app.use('/api/sets', setRoutes);
-app.use('/', userRoutes);
+app.use('/api', userRoutes);
 app.use('/api/users/me/decks', deckRoutes);
 
 app.use((req, res, next) => {

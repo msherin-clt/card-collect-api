@@ -60,28 +60,27 @@ const getUserProfile = async (req, res) => {
 const updateUserProfileController = async (req, res) => {
   try {
     const userId = req.user.id;
+    const updateData = {};
 
-    if (req.body.password || req.body.email) {
-      return res.status(400).json({ message: 'Cannot update email or password here' });
+    if (req.body.password || req.body.email || req.body.role) {
+      return res.status(400).json({ message: 'Cannot update email, password, or role using this endpoint.' });
     }
 
-    const { username } = {};
-
-    if (req.body.username){
-      username: req.body.username
-    }
-    else {
-      return res.status(400).json({ message: 'No valid fields to update' });
+    if (req.body.username) {
+      updateData.username = req.body.username;
     }
 
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: 'No valid fields provided to update.' });
+    }
 
-
-    const updated = await updateUserProfile(userId, { username });
+    const updated = await updateUserProfile(userId, updateData);
 
     res.json(updated);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error updating profile' });
+    const status = error.status || 500;
+    res.status(status).json({ message: error.message || 'Error updating profile' });
   }
 };
 
